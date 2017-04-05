@@ -22,7 +22,6 @@ From this initial state you can:
 * update settings to suit your needs
 * install more Python libraries and add them to the `requirements.txt` file
 
-
 ## Special files in this repository
 
 Apart from the regular files created by Django (`project/*`, `welcome/*`, `manage.py`), this repository contains:
@@ -35,6 +34,17 @@ openshift/         - OpenShift-specific files
 requirements.txt   - list of dependencies
 ```
 
+## Warnings
+
+Please be sure to read the following warnings and considerations before running this code on your local workstation, shared systems, or production environments.
+
+### Database configuration
+
+The sample application code and templates in this repository contain database connection settings and credentials that rely on being able to use sqlite.
+
+### Automatic test execution
+
+The sample application code and templates in this repository contain scripts that automatically execute tests via the postCommit hook.  These tests assume that they are being executed against a local test sqlite database. If alternate database credentials are supplied to the build, the tests could make undesireable changes to that database.
 
 ## Local development
 
@@ -80,7 +90,7 @@ After adding your templates, you can go to your OpenShift web console, browse to
 
 Adjust the parameter values to suit your configuration. Most times you can just accept the default values, however you will probably want to set the `GIT_REPOSITORY` parameter to point to your fork and the `DATABASE_*` parameters to match your database configuration.
 
-Alternatively, you can use the command line to create your new app, assuming your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](http://docs.openshift.org/latest/admin_guide/install/first_steps.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace:
+Alternatively, you can use the command line to create your new app, assuming your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace:
 
     oc new-app openshift/templates/django.json -p SOURCE_REPOSITORY_URL=<your repository location>
 
@@ -88,7 +98,7 @@ Your application will be built and deployed automatically. If that doesn't happe
 
     oc get builds
     # take build name from the command above
-    oc build-logs <build-name>
+    oc logs build/<build-name>
 
 And you can see information about your deployment too:
 
@@ -105,8 +115,8 @@ Templates give you full control of each component of your application.
 Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let OpenShift inspect your source code and create the required components automatically for you:
 
 ```bash
-$ oc new-app openshift/python-33-centos7~https://github.com/openshift/django-ex
-imageStreams/python-33-centos7
+$ oc new-app centos/python-35-centos7~https://github.com/openshift/django-ex
+imageStreams/python-35-centos7
 imageStreams/django-ex
 buildConfigs/django-ex
 deploymentConfigs/django-ex

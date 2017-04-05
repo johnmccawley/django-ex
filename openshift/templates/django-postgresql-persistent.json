@@ -2,13 +2,13 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "django-psql-example",
+    "name": "django-psql-persistent",
     "annotations": {
-      "openshift.io/display-name": "Django + PostgreSQL (Ephemeral)",
-      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.\n\nWARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.",
+      "openshift.io/display-name": "Django + PostgreSQL (Persistent)",
+      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
       "tags": "quickstart,python,django",
       "iconClass": "icon-python",
-      "template.openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration, application deployment configuration, and database deployment configuration.  The database is stored in non-persistent storage, so this configuration should be used for experimental purposes only.",
+      "template.openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration, application deployment configuration, and database deployment configuration.",
       "template.openshift.io/provider-display-name": "Red Hat, Inc.",
       "template.openshift.io/documentation-url": "https://github.com/openshift/django-ex",
       "template.openshift.io/support-url": "https://access.redhat.com"
@@ -16,7 +16,7 @@
   },
   "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
   "labels": {
-    "template": "django-psql-example"
+    "template": "django-psql-persistent"
   },
   "objects": [
     {
@@ -156,7 +156,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "django-psql-example"
+                "django-psql-persistent"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -182,7 +182,7 @@
           "spec": {
             "containers": [
               {
-                "name": "django-psql-example",
+                "name": "django-psql-persistent",
                 "image": " ",
                 "ports": [
                   {
@@ -262,6 +262,23 @@
       }
     },
     {
+      "kind": "PersistentVolumeClaim",
+      "apiVersion": "v1",
+      "metadata": {
+        "name": "${DATABASE_SERVICE_NAME}"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "${VOLUME_CAPACITY}"
+          }
+        }
+      }
+    },
+    {
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
@@ -329,8 +346,10 @@
           "spec": {
             "volumes": [
               {
-                "name": "data",
-                "emptyDir": {}
+                "name": "${DATABASE_SERVICE_NAME}-data",
+                "persistentVolumeClaim": {
+                  "claimName": "${DATABASE_SERVICE_NAME}"
+                }
               }
             ],
             "containers": [
@@ -368,7 +387,7 @@
                 ],
                 "volumeMounts": [
                   {
-                    "name": "data",
+                    "name": "${DATABASE_SERVICE_NAME}-data",
                     "mountPath": "/var/lib/pgsql/data"
                   }
                 ],
@@ -404,7 +423,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "django-psql-example"
+      "value": "django-psql-persistent"
     },
     {
       "name": "NAMESPACE",
@@ -426,6 +445,13 @@
       "required": true,
       "description": "Maximum amount of memory the PostgreSQL container can use.",
       "value": "512Mi"
+    },
+    {
+      "name": "VOLUME_CAPACITY",
+      "displayName": "Volume Capacity",
+      "description": "Volume space available for data, e.g. 512Mi, 2Gi",
+      "value": "1Gi",
+      "required": true
     },
     {
       "name": "SOURCE_REPOSITORY_URL",
