@@ -97,7 +97,7 @@ In the add to project screen, choose the Django + PostgreSQL Quickstart (qs-djan
 
 In the template configuration page for the Django + PostgreSQL Quickstart change the Git Repository URL to point to the repository that was just forked into your account. `https://github.com/johnmccawley/django-ex.git`. If you are running this tutorial in the free Hello World tier, you will want to set the `Memory Limit` for PostgreSQL to 128Mi rather than the default 192Mi. This will give your application enough room to build and deploy all of the containers it needs. For the rest of the parameters, you can simply accept the defaults for the remaining parameters and click "Create"
 
-![Add To Project](http://assets-digitalgarage-infra.apps.thedigitalgarage.io/images/screenshots/quickstart-configure.png)
+![Add To Project](http://assets-digitalgarage-infra.apps.thedigitalgarage.io/images/screenshots/quickstart-configure-django-psql.png)
 
 That's it. Digital Garage is now setting up your Django application. On the next page you'll be presented with some information about your new application. When you are ready, click "Continue to Overview". You will be taken to the Project Overview screen where you can watch Digital Garage do the setup work for you. In just a few minutes you'll have full Django application running in containers and managed through Google Kubernetes. When the application services and pods are completely deployed, (the pod status circle is Green) simply click on the application URL in the upper right corner of the overview screen. You will be taken to a browser to see a simple "Hello World" message.
 
