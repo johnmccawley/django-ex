@@ -2,22 +2,21 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "django-example",
+    "name": "qs-django",
     "annotations": {
       "openshift.io/display-name": "Django",
-      "description": "An example Django application with no database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
+      "description": "An example Django application with no database. For more information about using this template, including Digital Garage considerations, see https://github.com/thedigitalgarage/django-ex/blob/master/README.md.",
       "tags": "quickstart,python,django",
       "iconClass": "icon-python",
       "template.openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration and application deployment configuration.  It does not include a database.",
-      "template.openshift.io/provider-display-name": "Red Hat, Inc.",
-      "template.openshift.io/documentation-url": "https://github.com/openshift/django-ex",
-      "template.openshift.io/support-url": "https://access.redhat.com"
+      "template.openshift.io/provider-display-name": "Digital Garage, LLC",
+      "template.openshift.io/documentation-url": "https://github.com/thedigitalgarage/django-ex"
     }
   },
   "labels": {
     "template": "django-example"
   },
-  "message": "The following service(s) have been created in your project: ${NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
+  "message": "The following service(s) have been created in your project: ${NAME}.\n\nFor more information about using this template, including Digital Garage considerations, see https://github.com/thedigitalgarage/django-ex/blob/master/README.md.",
   "objects": [
     {
       "kind": "Secret",
@@ -98,7 +97,7 @@
           "sourceStrategy": {
             "from": {
               "kind": "ImageStreamTag",
-              "namespace": "${NAMESPACE}",
+              "namespace": "openshift",
               "name": "python:3.5"
             },
             "env": [
@@ -235,28 +234,21 @@
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "django-example"
-    },
-    {
-      "name": "NAMESPACE",
-      "displayName": "Namespace",
-      "required": true,
-      "description": "The OpenShift Namespace where the ImageStream resides.",
-      "value": "openshift"
+      "value": "django-application"
     },
     {
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "required": true,
       "description": "Maximum amount of memory the container can use.",
-      "value": "512Mi"
+      "value": "192Mi"
     },
     {
       "name": "SOURCE_REPOSITORY_URL",
       "displayName": "Git Repository URL",
       "required": true,
       "description": "The URL of the repository with your application source code.",
-      "value": "https://github.com/openshift/django-ex.git"
+      "value": "https://github.com/thedigitalgarage/django-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
