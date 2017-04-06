@@ -101,6 +101,8 @@ In the template configuration page for the Django + PostgreSQL Quickstart change
 
 That's it. Digital Garage is now setting up your Django application. On the next page you'll be presented with some information about your new application. When you are ready, click "Continue to Overview". You will be taken to the Project Overview screen where you can watch Digital Garage do the setup work for you. In just a few minutes you'll have full Django application running in containers and managed through Google Kubernetes. When the application services and pods are completely deployed, (the pod status circle is Green) simply click on the application URL in the upper right corner of the overview screen. You will be taken to a browser to see a simple "Hello World" message.
 
+In this DJANGO example you will have [Sodapy Socrata library](https://github.com/xmun0x/sodapy) ready to use. After that you just need to add ``/socrata-example`` to the URL where you see a JSON object, which is information being provided by Socrata.
+
 ## Bootstrapping your application via the Command-Line-Interface (CLI)
 
 You can create a new application using the web console or by running the `oc new-app` command from the CLI. With the  Digital Garage CLI there are three ways to create a new application, by specifying either:
